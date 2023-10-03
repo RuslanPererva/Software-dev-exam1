@@ -4,39 +4,39 @@ public class Telegraph {
 	
 
 	public Telegraph() {
-        this.Message = "";
+        Message = "";
     }
 	
 	public Telegraph start() {
-		this.Message = "";
+		Message = "";
 		return this;
 	}
 	
 	public Telegraph dot(int count) {
         for (int i = 0; i < count; i++) {
-            this.Message+=".";
+            Message+=".";
         }
         return this;
     }
 	public Telegraph dash(int count) {
         for (int i = 0; i < count; i++) {
-            this.Message+="-";
+            Message+="-";
         }
         return this;
 	}
 	public Telegraph gap() {
-            this.Message+=" ";
+            Message+=" ";
 
         return this;
 	}
 	
 	public Telegraph word() {
-        this.Message+="   ";
+        Message+="   ";
 
     return this;
 	}
 	
 	public String end() {
-		return Message.trim();
+		return Message;
 	}
 }

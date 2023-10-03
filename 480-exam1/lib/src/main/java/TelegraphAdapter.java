@@ -1,3 +1,5 @@
+import static org.mockito.ArgumentMatchers.booleanThat;
+
 import java.util.HashMap;
 
 public class TelegraphAdapter {
@@ -35,44 +37,82 @@ public class TelegraphAdapter {
         Morse.put('x', "-..-");
         Morse.put('y', "-.--");
         Morse.put('z', "--..");
+        
 		t.start();
-		for (char c : s.toCharArray()) {
+		boolean addgap = true;
+		char[] schar = s.toCharArray();
+		int maxgaps = schar.length-1;
+		int curgaps = 0;
+		for (int x =0; x<schar.length; x++) {
+			char c = schar[x];
 			char lc = Character.toLowerCase(c);
-			if (Morse.containsKey(lc)) {
+			
+			if (x<schar.length-2 && schar[x+1]==' ') {
+				addgap=false;
+			}
+			if (c ==' ') {
+				t.word();
+				
+			}
+			else if (Morse.containsKey(lc)) {
 				String morseCode = Morse.get(lc);
 				char[] ctemp = morseCode.toCharArray();
-				int loc = 0;
-				while (loc < ctemp.length) {
-					if (ctemp[loc]=='-' && loc  != ctemp.length) {
-						int dashtemp = 0;
-						while (ctemp[loc]=='-') {
-							dashtemp+=1;
-							loc+=1;
+				int count = 0;
+				char prevChar = '-';
+				for (int loc = 0; loc < ctemp.length; loc++) {
+					if (ctemp[loc]==prevChar) {
+						count += 1;
+					}
+					else if (ctemp[loc]=='.') {
+						if (count>0) {
+							t.dash(count);
 						}
-						t.dash(dashtemp);
+						count=1;
+						prevChar=ctemp[loc];
 					}
-					else if (ctemp[loc]=='.'&& loc  != ctemp.length) {
-						int dottemp = 0;
-						while (ctemp[loc]=='.') {
-							dottemp+=1;
-							loc+=1;
+					else if (ctemp[loc]=='-') {
+						if (count>0) {
+							t.dot(count);
 						}
-						t.dot(dottemp);
+						count=1;
+						prevChar=ctemp[loc];
 					}
-					else if (ctemp[loc]==' '&& loc  != ctemp.length) {
-						t.gap();
 					}
-					
+				if (count>0 && prevChar == '.') {
+					t.dot(count);
 				}
-				
+				else if (count>0 && prevChar == '-') {
+					t.dash(count);
+				}
+				if (addgap==true && curgaps != maxgaps) {
+				t.gap();
+				curgaps +=1;
+				}
+				else { addgap = true;}
 			}
 			else {
 				throw new IllegalArgumentException("wrong character '" + c+ "'");
 			}
-			t.word();
 		}
 		String ret = t.end();
-		return ret;
+		if (ret.length()>1 && ret.charAt(ret.length()-1)==' ') {
+		return ret.substring(0, ret.length()-1);
+		}
+		else {
+			return ret;
+		}
 	}
+	
+	
+	
+	
+	
+    public static void main(String[] args){
+    	String temp = TelegraphAdapter.toMorse(new Telegraph(), "sos");
+    	System.out.println(temp);
+		
+    	
+	}
+    
 
 }
