@@ -65,62 +65,43 @@ interface StarWarsSurvey {
 			movieList -> countVotesForMostLikedMovieAmongThoseWhoWatchedAnyOfTheSixMovies.apply(movieList).entrySet()
 					.stream().max(Comparator.comparing(Map.Entry::getValue)).map(Map.Entry::getKey);
 
+	static BiFunction<Stream<String>, String, Map<String, Long>> countVeryFavorableCharacterVotesByGender = (SWList,
+			character) -> SWList.skip(2) // Skip the header rows
+					.map(line -> line.split(",")).filter(fields -> fields[1].contains("Yes")).filter(fields -> {
+						int columnIndex = -1;
 
-			static BiFunction<Stream<String>, String, Map<String, Long>> countVeryFavorableCharacterVotesByGender =
-			        (SWList, character) -> SWList.skip(2) // Skip the header rows
-			                .map(line -> line.split(","))
-			                .filter(fields -> fields[1].contains("Yes"))
-			                .filter(fields -> {
-			                    int columnIndex = -1;
-			                    
-			                        if (character== "Han Solo") {
-			                            columnIndex = 15;
-			                            
-			                        }
-			                        else if (character == "Luke Skywalker") {
-			                            columnIndex = 16;
-			                        }
-			                        else if (character == "Anakin Skywalker") {
-			                            columnIndex = 17;
-			                        }
-			                        else if (character == "Obi Wan Kenobi") {
-			                            columnIndex = 18;
-			                        }
-			                        else if (character == "Emperor Palpatine") {
-			                            columnIndex = 19;
-			                        }
-			                        else if (character == "Darth Vader") {
-			                            columnIndex = 20;
-			                        }
-			                        else if (character == "Lando Calrissian") {
-			                            columnIndex = 21;
-			                        }
-			                        else if (character == "Boba Fett") {
-			                            columnIndex = 22;
-			                        }
-			                        else if (character == "C-3P0") {
-			                            columnIndex = 23;
-			                        }
-			                        else if (character == "R2 D2") {
-			                            columnIndex = 24;
-			                        }
-			                        else if (character == "Jar Jar Binks") {
-			                            columnIndex = 25;
-			                        }
-			                        else if (character == "Padme Amidala") {
-			                            columnIndex = 26;
-			                        }
-			                        else if (character == "Yoda") {
-			                            columnIndex = 27;
-			                        
-			                    }
-			                    return columnIndex != -1 && columnIndex < fields.length && fields[columnIndex].equals("Very favorably");
-			                })
-			                .map(fields -> fields[29])
-			                .collect(Collectors.groupingBy(
-			                        Function.identity(),
-			                        Collectors.counting()
-			                ));
+						if (character == "Han Solo") {
+							columnIndex = 15;
 
+						} else if (character == "Luke Skywalker") {
+							columnIndex = 16;
+						} else if (character == "Anakin Skywalker") {
+							columnIndex = 17;
+						} else if (character == "Obi Wan Kenobi") {
+							columnIndex = 18;
+						} else if (character == "Emperor Palpatine") {
+							columnIndex = 19;
+						} else if (character == "Darth Vader") {
+							columnIndex = 20;
+						} else if (character == "Lando Calrissian") {
+							columnIndex = 21;
+						} else if (character == "Boba Fett") {
+							columnIndex = 22;
+						} else if (character == "C-3P0") {
+							columnIndex = 23;
+						} else if (character == "R2 D2") {
+							columnIndex = 24;
+						} else if (character == "Jar Jar Binks") {
+							columnIndex = 25;
+						} else if (character == "Padme Amidala") {
+							columnIndex = 26;
+						} else if (character == "Yoda") {
+							columnIndex = 27;
+
+						}
+						return columnIndex != -1 && columnIndex < fields.length
+								&& fields[columnIndex].equals("Very favorably");
+					}).map(fields -> fields[29])
+					.collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
 
 }

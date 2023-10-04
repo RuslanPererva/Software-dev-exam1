@@ -1,8 +1,4 @@
-import static org.mockito.ArgumentMatchers.booleanThat;
-
 import java.util.HashMap;
-
-import org.mockito.Mockito;
 
 public class TelegraphAdapter {
 	

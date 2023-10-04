@@ -39,7 +39,7 @@ public class HandMeDownProxyFactory {
                                 owners.add(newOwner);
                             }
                             Object result = method.invoke(handDown, args);
-                            return invoke(proxy, method, args);
+                            return result;
                     }
                 }
             }
