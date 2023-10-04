@@ -2,6 +2,8 @@ import static org.mockito.ArgumentMatchers.booleanThat;
 
 import java.util.HashMap;
 
+import org.mockito.Mockito;
+
 public class TelegraphAdapter {
 	
 	
@@ -101,17 +103,6 @@ public class TelegraphAdapter {
 		else {
 			return ret;
 		}
-	}
-	
-	
-	
-	
-	
-    public static void main(String[] args){
-    	String temp = TelegraphAdapter.toMorse(new Telegraph(), "sos");
-    	System.out.println(temp);
-		
-    	
 	}
     
 
