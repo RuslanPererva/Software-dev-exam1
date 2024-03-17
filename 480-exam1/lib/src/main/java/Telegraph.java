@@ -1,42 +1,18 @@
+import java.util.Scanner;
+
 public class Telegraph {
 	
-    private String Message;
-	
+	public static void main() {
+		Scanner sc = new Scanner (System.in);
+		int menu_choice, num1, num2;
+		
+		System.out.println("Menu:");
+		System.out.println("1. Add");
+		System.out.println("2. Subtract");
+		System.out.println("3. Multiply");
+		System.out.println("4. Divide");
+		System.out.println("5. Remainder");
+		
+	}
 
-	public Telegraph() {
-        Message = "";
-    }
-	
-	public Telegraph start() {
-		Message = "";
-		return this;
-	}
-	
-	public Telegraph dot(int count) {
-        for (int i = 0; i < count; i++) {
-            Message+=".";
-        }
-        return this;
-    }
-	public Telegraph dash(int count) {
-        for (int i = 0; i < count; i++) {
-            Message+="-";
-        }
-        return this;
-	}
-	public Telegraph gap() {
-            Message+=" ";
-
-        return this;
-	}
-	
-	public Telegraph word() {
-        Message+="   ";
-
-    return this;
-	}
-	
-	public String end() {
-		return Message;
-	}
 }
